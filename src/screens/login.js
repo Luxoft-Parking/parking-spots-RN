@@ -1,8 +1,9 @@
 import React, {useState, useContext, useEffect} from 'react';
-import {View, Button, TextInput, KeyboardAvoidingView} from 'react-native';
+import {View, TextInput, KeyboardAvoidingView} from 'react-native';
 
 import { colors, blankScreenStyle, centerViewStyle, inputSpacing, inputStyle } from '../styles';
 import ScreenFit from '../components/structure/screenFit';
+import Button from '../components/button';
 import {DataContext} from '../components/contexts/data';
 
 const Login = ({navigation}) => {
@@ -39,10 +40,8 @@ const Login = ({navigation}) => {
                     />
                     <Button
                         title="Login"
-                        disabled={false}
                         onPress={onLogin}
-                        color={colors.primary}
-                        style={inputSpacing}
+                        isPrimary
                     />
                 </View>
             </KeyboardAvoidingView>

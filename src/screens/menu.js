@@ -1,7 +1,8 @@
 import React, {useContext, useEffect, useCallback} from 'react';
-import {View, Button, Text} from 'react-native';
+import {View, Text} from 'react-native';
 
-import {colors, blankScreenStyle, centerViewStyle, headerStyle} from '../styles';
+import Button from '../components/button';
+import {blankScreenStyle, centerViewStyle, headerStyle} from '../styles';
 import ScreenFit from '../components/structure/screenFit';
 import {DataContext} from '../components/contexts/data';
 
@@ -31,12 +32,12 @@ const Menu = ({navigation}) => {
                 <Button
                     title="Drive to work"
                     onPress={onDrive}
-                    color={colors.primary}
+                    isPrimary
                 />
                 <Button
                     title="Carpool to work"
                     onPress={onCarpool}
-                    color={colors.white}
+                    isPrimary={false}
                 />
             </View>
         </ScreenFit>

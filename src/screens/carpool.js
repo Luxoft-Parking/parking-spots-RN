@@ -1,8 +1,9 @@
 import React, {useCallback} from 'react';
-import {View, Button, Text} from 'react-native';
+import {View, Text} from 'react-native';
 
-import {colors, blankScreenStyle, centerViewStyle, headerStyle} from '../styles';
+import {blankScreenStyle, centerViewStyle, headerStyle} from '../styles';
 import ScreenFit from '../components/structure/screenFit';
+import Button from '../components/button';
 
 const Carpool = ({navigation}) => {
     const onScan = useCallback(() => {
@@ -16,7 +17,7 @@ const Carpool = ({navigation}) => {
                 <Button
                     title="Press to Scan"
                     onPress={onScan}
-                    color={colors.primary}
+                    isPrimary
                 />
             </View>
         </ScreenFit>

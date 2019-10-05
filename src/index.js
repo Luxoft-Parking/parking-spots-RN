@@ -9,6 +9,7 @@ import Login from './screens/login';
 import Menu from './screens/menu';
 import Carpool from './screens/carpool';
 import Camera from './screens/camera';
+import FreeSpots from './screens/freeSpots';
 
 const NavigationStack = createStackNavigator({
     Main,
@@ -16,9 +17,10 @@ const NavigationStack = createStackNavigator({
     Menu,
     Carpool,
     Camera,
+    FreeSpots,
 }, {
-    // initialRouteName: 'Login',
-    initialRouteName: 'Main',
+    initialRouteName: 'FreeSpots',
+    // initialRouteName: 'Main',
     headerMode: 'none',
 });
 
