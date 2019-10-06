@@ -7,13 +7,11 @@ import ScreenFit from '../components/structure/screenFit';
 import {DataContext} from '../components/contexts/data';
 
 const Menu = ({navigation}) => {
-    const {state: {user}} = useContext(DataContext);
+    const {state: {user}, actions: {logout}} = useContext(DataContext);
 
     useEffect(() => {
-        // TODO
-        // if user is not a driver then just redirect him to the carpool screen
-        if (user && user.type === 'XXX') {
-            navigation.push('Carpool');
+        if (user && !user.isDriver) {
+            navigation.replace('Carpool');
         }
     }, [user]);
 
@@ -23,6 +21,14 @@ const Menu = ({navigation}) => {
 
     const onCarpool = useCallback(() => {
         navigation.push('Carpool');
+    }, []);
+
+    const onLogout = useCallback(async () => {
+        const success = await logout();
+
+        if (success) {
+            navigation.push('Login');
+        }
     }, []);
 
     return (
@@ -37,6 +43,11 @@ const Menu = ({navigation}) => {
                 <Button
                     title="Carpool to work"
                     onPress={onCarpool}
+                    isPrimary={false}
+                />
+                <Button
+                    title="Logout"
+                    onPress={onLogout}
                     isPrimary={false}
                 />
             </View>

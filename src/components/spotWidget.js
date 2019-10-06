@@ -9,7 +9,7 @@ const SpotWidget = (props) => {
         onPress,
         isSelected,
     } = props;
-    const size = (Dimensions.get('window').width * .5) / 2;
+    const size = (Dimensions.get('window').width * .7) / 2;
 
     return (
         <TouchableOpacity

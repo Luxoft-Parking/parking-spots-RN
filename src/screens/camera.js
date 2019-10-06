@@ -9,7 +9,8 @@ import { colors } from '../styles';
 const Camera = ({navigation}) => {
     const [hasCameraPermission, setHasCameraPermission] = useState(null);
     const [didScan, setDidScan] = useState(false);
-    const {actions: {scanCode}} = useContext(DataContext);
+    const {actions: {carpool}} = useContext(DataContext);
+
     useEffect(() => {
         let didCancel = false;
         (async () => {
@@ -33,17 +34,25 @@ const Camera = ({navigation}) => {
 
     const handleBarCodeScanned = async ({data}) => {
         setDidScan(true);
-        // TODO update this action
-        await scanCode(data);
+        const success = await carpool(data, true);
 
-        const onSuccess = () => navigation.push('Menu');
-
-        Alert.alert(
-            'Success!',
-            'You are carpooling now!',
-            [{text: 'ok', onPress: onSuccess}],
-            {onDismiss: onSuccess},
-        );
+        if (success) {
+            const onSuccess = () => navigation.push('Menu');
+            Alert.alert(
+                'Success!',
+                'You are carpooling now!',
+                [{text: 'ok', onPress: onSuccess}],
+                {onDismiss: onSuccess},
+            );
+        } else {
+            const onDismiss = () => setDidScan(false);
+            Alert.alert(
+                'Error!',
+                'There was a problem!',
+                [{text: 'ok', onPress: onDismiss}],
+                {onDismiss: onDismiss},
+            );
+        }
     };
 
     const size = Dimensions.get('screen').width * .75;

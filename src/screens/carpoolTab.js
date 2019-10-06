@@ -7,7 +7,7 @@ import {centerViewStyle, headerStyle, noteStyle} from '../styles';
 import {DataContext} from '../components/contexts/data';
 import Division from '../components/structure/division';
 
-const CarpoolTab = (props) => {
+const CarpoolTab = () => {
     const {state: {user}} = useContext(DataContext);
     const screenWidth = Dimensions.get('screen').width * .8;
 
@@ -25,9 +25,7 @@ const CarpoolTab = (props) => {
                 }}
             >
                 <QRCode
-                    // TODO
-                    // value={user.qrCode}
-                    value={'random_string'}
+                    value={user.qrCodeData}
                     size={screenWidth}
                     color='#333'
                     backgroundColor='#fff'

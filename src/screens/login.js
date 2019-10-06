@@ -1,7 +1,7 @@
 import React, {useState, useContext, useEffect} from 'react';
 import {View, TextInput, KeyboardAvoidingView} from 'react-native';
 
-import { colors, blankScreenStyle, centerViewStyle, inputSpacing, inputStyle } from '../styles';
+import {blankScreenStyle, centerViewStyle, inputSpacing, inputStyle} from '../styles';
 import ScreenFit from '../components/structure/screenFit';
 import Button from '../components/button';
 import {DataContext} from '../components/contexts/data';
@@ -9,10 +9,15 @@ import {DataContext} from '../components/contexts/data';
 const Login = ({navigation}) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const {actions: {login}, state: {isLoggedIn}} = useContext(DataContext);
+    const {actions: {login, getUser}, state: {isLoggedIn}} = useContext(DataContext);
+
+    useEffect(() => {
+        // try to login in case there is a jwt already saved
+        getUser(true);
+    }, []);
     useEffect(() => {
         if (isLoggedIn) {
-            navigation.push('Tabs');
+            navigation.replace('Menu');
         }
     }, [isLoggedIn]);
 
@@ -42,6 +47,7 @@ const Login = ({navigation}) => {
                         title="Login"
                         onPress={onLogin}
                         isPrimary
+                        disabled={!email || !password}
                     />
                 </View>
             </KeyboardAvoidingView>

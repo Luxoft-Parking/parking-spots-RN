@@ -1,20 +1,31 @@
-import React, {useState} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import {Text, View, ScrollView} from 'react-native';
 
 import Modal from '../components/structure/modal';
 import Button from '../components/button';
-import SpotWidget from '../components/spotWidget'
+import SpotWidget from '../components/spotWidget';
+import {DataContext} from '../components/contexts/data';
 import {
     headerStyle,
     descriptionStyle,
 } from '../styles';
 
-const FreeSpots = (props) => {
+const FreeSpots = ({navigation}) => {
+    const {state: {freeSpots}, actions: {getFreeSpots, assignSpot}} = useContext(DataContext);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [selectedSpot, setSelectedSpot] = useState(null);
+    useEffect(() => {
+        getFreeSpots();
+    }, []);
 
-    const handleOnConfirmSpot = () => {
-        setIsModalVisible(true);
+    const handleOnConfirmSpot = async () => {
+        const success = await assignSpot(selectedSpot);
+
+        if (success) {
+            navigation.replace('Login');
+        } else {
+            setIsModalVisible(true);
+        }
     };
     const handleOnDismiss = () => {
         setIsModalVisible(false);
@@ -22,22 +33,6 @@ const FreeSpots = (props) => {
     const handleOnSpotSelected = (spotId) => () => {
         setSelectedSpot(spotId);
     };
-
-    const spots = [
-        {id: 1, level: 2, number: 44},
-        {id: 2, level: 2, number: 44},
-        {id: 3, level: 2, number: 44},
-        {id: 4, level: 2, number: 44},
-        {id: 5, level: 2, number: 44},
-        {id: 6, level: 2, number: 44},
-        {id: 7, level: 2, number: 44},
-        {id: 8, level: 2, number: 44},
-        {id: 9, level: 2, number: 44},
-        {id: 10, level: 2, number: 44},
-        {id: 11, level: 2, number: 44},
-        {id: 12, level: 2, number: 44},
-        {id: 13, level: 2, number: 44},
-    ];
 
     return (
         <>
@@ -50,7 +45,7 @@ const FreeSpots = (props) => {
                     Hurry up choose a spot before somebody else gets it!
                 </Text>
 
-                {spots.length ?
+                {freeSpots.length ?
                     <ScrollView
                         contentContainerStyle={{
                             justifyContent: 'space-around',
@@ -58,13 +53,13 @@ const FreeSpots = (props) => {
                             flexWrap: 'wrap',
                         }}
                     >
-                        {spots.map(spot =>
+                        {freeSpots.map(spot =>
                             <SpotWidget
-                                key={spot.id}
+                                key={spot._id}
                                 level={spot.level}
                                 number={spot.number}
-                                onPress={handleOnSpotSelected(spot.id)}
-                                isSelected={selectedSpot === spot.id}
+                                onPress={handleOnSpotSelected(spot._id)}
+                                isSelected={selectedSpot === spot._id}
                             />
                         )}
                     </ScrollView>
