@@ -26,9 +26,9 @@ export const DataProvider = ({children}) => {
         setGlobalError(null);
     };
 
-    const login = async (email, password) => {
+    const login = async (email, password, expoToken) => {
         try {
-            const loginResponse = await api.user.login(email, password);
+            const loginResponse = await api.user.login(email, password, expoToken);
 
             if (loginResponse.status === 400) {
                 throw new Error('Invalid username and password!');

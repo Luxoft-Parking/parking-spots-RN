@@ -58,8 +58,8 @@ async function put(url, body) {
 
 export default {
     user: {
-        login: (email, password) => {
-            return post('/v1/user/login', {username: email, password});
+        login: (email, password, expoToken) => {
+            return post('/v1/user/login', {username: email, password, expoToken});
         },
         logout: () => {
             return get('/v1/user/logout');
@@ -77,7 +77,7 @@ export default {
             return put('/v1/user/spot/release');
         },
         spotAssign: (spotId) => {
-            return put('/v1/user/spot', {spotId});
+            return put(`/v1/user/spot/${spotId}`);
         },
     },
     spot: {
